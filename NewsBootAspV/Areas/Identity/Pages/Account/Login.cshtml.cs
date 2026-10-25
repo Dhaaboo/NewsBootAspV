@@ -46,6 +46,7 @@ public class LoginModel : PageModel
         
         [Required]
         [EmailAddress]
+        [StringLength(256)]
         public string Email { get; set; } = default!;
 
         [Required]
@@ -80,8 +81,13 @@ public class LoginModel : PageModel
 
         if (ModelState.IsValid)
         {
-          var user = await _userManager.FindByEmailAsync(Input.Email.Trim());
-            if(user == null)
+            //var loginiput = Input.Email.Trim();
+            //var user = loginiput.Contains("@") 
+            //    ? await _userManager.FindByEmailAsync(loginiput) 
+            //    : await _userManager.FindByNameAsync(loginiput);
+
+            var user = await _userManager.FindByEmailAsync(Input.Email.Trim());
+            if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Invalid Email or password attempt.");
                 return Page();
